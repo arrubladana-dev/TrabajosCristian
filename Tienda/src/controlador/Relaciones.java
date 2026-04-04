@@ -1,6 +1,7 @@
 package controlador;
 
 
+import modelo.LogicaCompra;
 import modelo.dao.ClienteDAO;
 import modelo.dao.ComprasDAO;
 import modelo.dao.ProductoDAO;
@@ -29,6 +30,7 @@ public class Relaciones {
 		VentanaRegistrarProducto miRegistroproducto = new VentanaRegistrarProducto();
 		VentanaConsultarUsuario miVentanaConsultarUsuarios = new VentanaConsultarUsuario();
 		VentanaConsultarProducto miVnetanaConsultarProducto = new VentanaConsultarProducto();
+		LogicaCompra miLogicaCompras = new LogicaCompra();
 		Coordinador miCoodinador = new Coordinador();
 		
 		//Relaciones 
@@ -43,6 +45,7 @@ public class Relaciones {
 		miRegistroproducto.setCoordinador(miCoodinador);
 		miVentanaConsultarUsuarios.setCoordinador(miCoodinador);	
 		miVnetanaConsultarProducto.setCoordinador(miCoodinador);
+		miLogicaCompras.setCoordinador(miCoodinador);
 		
 		//Relacion viseversa 
 		miCoodinador.setClienteDAO(misCliente);
@@ -56,6 +59,7 @@ public class Relaciones {
 		miCoodinador.setVentanaRegistrarProducto(miRegistroproducto);
 		miCoodinador.setVentanaConsultarUsuario(miVentanaConsultarUsuarios);
 		miCoodinador.setVentanaConsultarProducto(miVnetanaConsultarProducto);
+		miCoodinador.setLogicaCompras(miLogicaCompras);
 		
 		// metodo para la ventana principal 
 		miCoodinador.verVentanaPrincipal();

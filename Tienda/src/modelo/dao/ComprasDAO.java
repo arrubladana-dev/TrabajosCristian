@@ -36,8 +36,8 @@ public class ComprasDAO {
 		        preStatement = connection.prepareStatement(consulta);
 
 		        preStatement.setDouble(1, compra.getDescuento());
-		        preStatement.setDouble(2, compra.getCompraRealizada()); // total a pagar
-		        preStatement.setDouble(3, compra.getTotal()); // total sin descuento
+		        preStatement.setDouble(2, compra.getCompraRealizada()); 
+		        preStatement.setDouble(3, compra.getTotal()); 
 		        preStatement.setString(4, compra.getDocumento());
 		        preStatement.setString(5, compra.getCodigoProducto());
 

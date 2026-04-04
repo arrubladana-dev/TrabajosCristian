@@ -67,6 +67,14 @@ public class ComprasDTO {
 	public void setCodigoProducto(String codigoProducto) {
 		this.codigoProducto = codigoProducto;
 	}
+
+	@Override
+	public String toString() {
+		return "Compras [idFacturaCodigo: " + idFacturaCodigo + ", descuento: " + descuento + ", compraRealizada: "
+				+ compraRealizada + ", total: " + total + ", documento: " + documento + ", codigoProducto: "
+				+ codigoProducto + "]";
+	}
+	
 	
 	
 	

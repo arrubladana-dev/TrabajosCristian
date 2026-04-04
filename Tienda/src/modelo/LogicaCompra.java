@@ -11,13 +11,13 @@ public class LogicaCompra {
 	        double descuento = 0;
 
 	        switch (tipo) {
-	            case "A":
+	            case "a":
 	                descuento = total * 0.4;
 	                break;
-	            case "B":
+	            case "b":
 	                descuento = total * 0.2;
 	                break;
-	            case "C":
+	            case "c":
 	                descuento = total * 0.1;
 	                break;
 	            default:
@@ -29,6 +29,9 @@ public class LogicaCompra {
 
 	    public double calcularTotalPagar(double total, double descuento) {
 	        return total - descuento;
+	    }
+	    public double calcularTotal(double total, int cantidad) {
+	        return total * cantidad;
 	    }
 
 		public void setCoordinador(Coordinador miCoodinador) {

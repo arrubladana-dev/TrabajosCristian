@@ -98,6 +98,8 @@ public class Coordinador {
 
 	public void mostrarVentanaCompras() {
 		miVentanaCompras.setVisible(true);
+		miVentanaCompras.cargarProductos(obtenerProductos());
+		miVentaPrincipal.setVisible(false);
 		
 	}
 
@@ -228,6 +230,11 @@ public class Coordinador {
 			e.printStackTrace();
 			return new ArrayList<ProductosDTO>();
 		}
+	}
+
+	public double calcularTotal(double precio, int cantidad) {
+		// TODO Auto-generated method stub
+		return miLogicaCompras.calcularTotal(precio, cantidad);
 	}
 
 	

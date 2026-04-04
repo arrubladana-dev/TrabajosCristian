@@ -16,7 +16,7 @@ public class VentanaCompras extends JFrame implements ActionListener {
     private Coordinador miCoordinador;
 
     private JTextField txtDocumentoUsuario;
-    private JComboBox<String> comboProductos;
+    private JComboBox<ProductosDTO> comboProductos;
     private JTextField txtCantidad;
     private JTextArea areaCompras;
 
@@ -24,6 +24,7 @@ public class VentanaCompras extends JFrame implements ActionListener {
     private JButton btnAgregarProducto;
     private JButton btnRegistrarCompra;
     private JButton btnVolver;
+    private JTextField textCodigo;
 
     public VentanaCompras() {
         setTitle("Gestión de Compras");
@@ -63,32 +64,42 @@ public class VentanaCompras extends JFrame implements ActionListener {
         contentPane.add(lblCantidad);
 
         txtCantidad = new JTextField();
-        txtCantidad.setBounds(180, 100, 150, 25);
+        txtCantidad.setBounds(83, 100, 150, 25);
         contentPane.add(txtCantidad);
 
         
         btnAgregarProducto = new JButton("Agregar Producto");
-        btnAgregarProducto.setBounds(150, 140, 180, 30);
+        btnAgregarProducto.setBounds(150, 136, 180, 30);
         btnAgregarProducto.addActionListener(this);
         contentPane.add(btnAgregarProducto);
-
-        
-        areaCompras = new JTextArea();
-        JScrollPane scroll = new JScrollPane(areaCompras);
-        scroll.setBounds(20, 180, 440, 120);
+        JScrollPane scroll = new JScrollPane();
+        scroll.setBounds(20, 215, 448, 120);
         contentPane.add(scroll);
 
         
         btnRegistrarCompra = new JButton("Finalizar Compra");
-        btnRegistrarCompra.setBounds(150, 310, 180, 30);
+        btnRegistrarCompra.setBounds(32, 346, 180, 30);
         btnRegistrarCompra.addActionListener(this);
         contentPane.add(btnRegistrarCompra);
 
         
         btnVolver = new JButton("Volver");
-        btnVolver.setBounds(150, 350, 180, 30);
+        btnVolver.setBounds(262, 346, 180, 30);
         btnVolver.addActionListener(this);
         contentPane.add(btnVolver);
+        
+                
+                areaCompras = new JTextArea();
+                areaCompras.setBounds(20, 217, 448, 118);
+                contentPane.add(areaCompras);
+                
+                JLabel lblCodigo = new JLabel("Codigo");
+                lblCodigo.setBounds(243, 100, 150, 25);
+                contentPane.add(lblCodigo);
+                
+                textCodigo = new JTextField();
+                textCodigo.setBounds(306, 100, 150, 25);
+                contentPane.add(textCodigo);
     }
 
     public void setCoordinador(Coordinador miCoordinador) {
@@ -118,20 +129,22 @@ public class VentanaCompras extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario válido");
             }
+            limpiarCampos();
         }
 
         if (e.getSource() == btnAgregarProducto) {
-
-            String producto = (String) comboProductos.getSelectedItem();
-            ventanaCompras.cargarProductos(miCoordinador.obtenerProductos());
+        	
+        	ProductosDTO producto = (ProductosDTO) comboProductos.getSelectedItem();
+        	String codigo = producto.getCodigo();
             String cantidad = txtCantidad.getText();
+            
 
-            if (producto == null || cantidad.isEmpty()) {
+            if (codigo == null || cantidad.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete los campos");
                 return;
             }
 
-            areaCompras.append("Producto: " + producto + "  Cantidad: " + cantidad + "\n");
+            areaCompras.append("producto: "+producto.getNombreProducto()+ "cantidad: " + cantidad+"\\n");
         }
 
         
@@ -146,30 +159,24 @@ public class VentanaCompras extends JFrame implements ActionListener {
                 return;
             }
 
-            try {
-                String seleccionado = (String) comboProductos.getSelectedItem();
+           
+                
+                ProductosDTO producto = (ProductosDTO) comboProductos.getSelectedItem();
 
-                if (seleccionado == null) {
+            String codigoProducto = textCodigo.getText();
+//            ProductosDTO producto = miCoordinador.consultarProducto(codigoProducto);
+                if (producto == null) {
                     JOptionPane.showMessageDialog(this, "Seleccione un producto");
                     return;
                 }
 
                 
-                String codigoProducto = seleccionado.split(" - ")[0];
 
-                ProductosDTO producto = miCoordinador.consultarProducto(codigoProducto);
-
-                if (producto == null) {
-                    JOptionPane.showMessageDialog(this, "Producto no encontrado");
-                    return;
-                }
 
                 double precio = producto.getPrecio();
                 int cantidad = Integer.parseInt(txtCantidad.getText());
 
-                double total = precio * cantidad;
-
-                
+                double total = miCoordinador.calcularTotal(precio, cantidad); 
                 double descuento = miCoordinador.calcularDescuento(total, cliente.getTipo());
                 double totalPagar = miCoordinador.calcularTotalPagar(total, descuento);
 
@@ -184,16 +191,13 @@ public class VentanaCompras extends JFrame implements ActionListener {
                 
                 miCoordinador.registrarCompra(compra);
 
-                JOptionPane.showMessageDialog(this,
-                        "Compra realizada\nTotal: $" + total +
+                
+
+                areaCompras.append("Compra realizada\nTotal: $" + total +
                         "\nDescuento: $" + descuento +
                         "\nTotal a pagar: $" + totalPagar);
 
-                areaCompras.setText("");
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error en datos: " + ex.getMessage());
-            }
+            
         }
 
 
@@ -201,5 +205,9 @@ public class VentanaCompras extends JFrame implements ActionListener {
             miCoordinador.verVentanaPrincipal();
             this.setVisible(false);
         }
+    }
+    public void limpiarCampos() {
+    	txtCantidad.setText("");
+    	areaCompras.setText("");
     }
 }
