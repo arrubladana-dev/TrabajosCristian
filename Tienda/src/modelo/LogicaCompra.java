@@ -1,0 +1,37 @@
+package modelo;
+
+import controlador.Coordinador;
+
+public class LogicaCompra {
+	
+	private Coordinador miCoodinador;
+	
+	 public double calcularDescuento(double total, String tipo) {
+
+	        double descuento = 0;
+
+	        switch (tipo) {
+	            case "A":
+	                descuento = total * 0.4;
+	                break;
+	            case "B":
+	                descuento = total * 0.2;
+	                break;
+	            case "C":
+	                descuento = total * 0.1;
+	                break;
+	            default:
+	                descuento = 0;
+	        }
+
+	        return descuento;
+	    }
+
+	    public double calcularTotalPagar(double total, double descuento) {
+	        return total - descuento;
+	    }
+
+		public void setCoordinador(Coordinador miCoodinador) {
+			this.miCoodinador = miCoodinador;
+		}
+}
