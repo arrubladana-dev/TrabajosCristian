@@ -8,4 +8,6 @@ public class PetList {
     private String name;
 
     private String nameOew;
+
+    private String emailOew;
 }

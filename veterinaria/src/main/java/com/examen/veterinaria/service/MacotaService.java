@@ -49,6 +49,7 @@ public class MacotaService {
             PetList pet = new PetList();
             pet.setName(mascotas.getName());
             pet.setNameOew(mascotas.getNameOew());
+            pet.setEmailOew(mascotas.getEmailOew());
             petList.add(pet);
         }
         
@@ -80,8 +81,21 @@ public class MacotaService {
     }
 
     public MessageResposeDTO deletePet(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePet'");
+
+        MessageResposeDTO response = new MessageResposeDTO();
+
+        Optional<Mascotas> petSerh = mascotaRepository.findById(id);
+
+        if (petSerh==null){
+            response.setMessage("No existe esa mascota");
+            return response;
+        }
+
+        mascotaRepository.deleteById(id);
+
+        response.setMessage("Mascota eliminada");
+
+        return response;
     }
 
 
