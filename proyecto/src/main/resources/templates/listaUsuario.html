@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styleLista.css}">
+    <title>Usuarios</title>
+</head>
+<body>
+    <h2>Uasuarios</h2>
+    <a th:href="@{/showNewUsuario}">Añadir Usuarios</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Sexo</th>
+            <th>Correo</th>
+        </tr>
+        <tr th:each="usuarios:${listaUsuarios}">
+            <td th:text="${usuarios.id}"></td>
+            <td th:text="${usuarios.name}"></td>
+            <td th:text="${usuarios.lastName}"></td>
+            <td th:text="${usuarios.age}"></td>
+            <td th:text="${usuarios.sex}"></td>
+            <td th:text="${usuarios.email}"></td>
+            <td>
+                <!-- <a th:href="@{/showFormForUpdate/{id}(id=${student.id})}">Edit</a>
+                <a th:href="@{/deleteStudent/{id}(id=${student.id})}">Delete</a> -->
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
